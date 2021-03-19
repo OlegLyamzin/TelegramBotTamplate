@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TelegramBot.API.Models;
 
 namespace TelegramBot.API
 {
@@ -13,6 +14,7 @@ namespace TelegramBot.API
     {
         public static void Main(string[] args)
         {
+            Bot.Get();
             CreateHostBuilder(args).Build().Run();
         }
 
