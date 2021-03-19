@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>TelegramBot.API.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
