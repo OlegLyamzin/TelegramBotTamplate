@@ -1,29 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using TelegramBot.API.Models.Commands;
 using TelegramBot.Core;
+using TelegramBot.DAL;
 
 namespace TelegramBot.API.Models
 {
-    public static class Bot
+    public class Bot
     {
-        private static TelegramBotClient client;
-        private static List<Command> commandList;
+        private TelegramBotClient client;
+        private List<Command> commandList;
+        private SamaraCommand _samaraCommand;
 
-        public static IReadOnlyList<Command> Commands { get => commandList.AsReadOnly(); }
+        public IReadOnlyList<Command> Commands { get => commandList.AsReadOnly(); }
 
+        public Bot (IOptions<AppSettings> option, SamaraCommand samaraCommand)
+        {
+            Init(option.Value.API_KEY, option.Value.URL);
+            _samaraCommand = samaraCommand;
+        }
 
-        public static async Task<TelegramBotClient> Get()
+        public async Task<TelegramBotClient> Get()
         {
             return client;
         }
 
-        public static async Task<TelegramBotClient> Init(string apiKey, string url)
+        public async Task<TelegramBotClient> Init(string apiKey, string url)
         {
             commandList = new List<Command>();
             commandList.Add(new HelloCommand());
-            commandList.Add(new SamaraCommand());
+            commandList.Add(_samaraCommand);
 
             client = new TelegramBotClient(apiKey);
             await client.SetWebhookAsync(url);

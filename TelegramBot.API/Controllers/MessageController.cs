@@ -13,12 +13,19 @@ namespace TelegramBot.API.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
+        private Bot _bot;
+
+        public MessageController(Bot bot)
+        {
+            _bot = bot;
+        }
+
         [Route("update")]
         public async Task<ActionResult> Update([FromBody]Update update)
         {
-            var commands = Bot.Commands;
+            var commands = _bot.Commands;
             var message = update.Message;
-            var client = await Bot.Get();
+            var client = await _bot.Get();
 
             foreach(var command in commands)
             {

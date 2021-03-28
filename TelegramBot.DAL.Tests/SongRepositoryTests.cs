@@ -12,8 +12,6 @@ namespace TelegramBot.DAL.Tests
         [Test]
         public void Test()
         {
-            var repo = new SongRepository();
-            var actual = repo.GetSongByCollectionAndNumber(1, 1);
             Assert.Pass();
         }
     }

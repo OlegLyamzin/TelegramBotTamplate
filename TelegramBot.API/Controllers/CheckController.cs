@@ -16,10 +16,10 @@ namespace TelegramBot.API.Controllers
     [ApiController]
     public class CheckController : ControllerBase
     {
-        public CheckController(IOptions<AppSettings> options)
+        public CheckController(IOptions<AppSettings> options, Bot bot)
         {
             var appsetings = options.Value;
-            Bot.Init(appsetings.API_KEY, appsetings.URL);
+            bot.Get();
         }
        
         [HttpGet]
