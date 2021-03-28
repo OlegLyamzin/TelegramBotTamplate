@@ -14,7 +14,6 @@ namespace TelegramBot.API
     {
         public static void Main(string[] args)
         {
-            Bot.Get();
             CreateHostBuilder(args).Build().Run();
         }
 
