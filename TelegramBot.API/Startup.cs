@@ -12,6 +12,7 @@ using TelegramBot.API.Models;
 using Newtonsoft.Json;
 using TelegramBot.Core;
 using TelegramBot.DAL;
+using TelegramBot.API.Models.Commands;
 
 namespace TelegramBot.API
 {
@@ -32,6 +33,7 @@ namespace TelegramBot.API
             services.AddControllers().AddNewtonsoftJson();
             services.Configure<AppSettings>(Configuration);
             services.AddScoped<SongRepository>();
+            services.AddScoped<SamaraCommand>();
             services.AddScoped<Bot>();
         }
 
