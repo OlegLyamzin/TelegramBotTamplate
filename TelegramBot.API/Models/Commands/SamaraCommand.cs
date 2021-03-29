@@ -26,14 +26,12 @@ namespace TelegramBot.API.Models.Commands
             try
             {
                 number = Convert.ToInt32( message.Text.Split(" ")[1]);
+                await client.SendTextMessageAsync(chatId, _songRepository.GetSongByCollectionAndNumber(1,number).Text);
             }
             catch 
             {
                 await client.SendTextMessageAsync(chatId, "Not Found");
-
             }
-
-            await client.SendTextMessageAsync(chatId, _songRepository.GetSongByCollectionAndNumber(1,number).Text);
         }
     }
 }
