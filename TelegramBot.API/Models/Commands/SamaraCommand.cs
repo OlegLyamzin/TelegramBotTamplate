@@ -25,9 +25,13 @@ namespace TelegramBot.API.Models.Commands
             var number = 1;
             try
             {
-                number = Convert.ToInt32( message.Text.Split(" "));
+                number = Convert.ToInt32( message.Text.Split(" ")[1]);
             }
-            catch { }
+            catch 
+            {
+                await client.SendTextMessageAsync(chatId, "Not Found");
+
+            }
 
             await client.SendTextMessageAsync(chatId, _songRepository.GetSongByCollectionAndNumber(1,number).Text);
         }

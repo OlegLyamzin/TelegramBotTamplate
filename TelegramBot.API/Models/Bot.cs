@@ -18,8 +18,8 @@ namespace TelegramBot.API.Models
 
         public Bot (IOptions<AppSettings> option, SamaraCommand samaraCommand)
         {
-            Init(option.Value.API_KEY, option.Value.URL);
             _samaraCommand = samaraCommand;
+            Init(option.Value.API_KEY, option.Value.URL);
         }
 
         public async Task<TelegramBotClient> Get()

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Telegram.Bot;
 using TelegramBot.API.Models;
 using TelegramBot.Core;
 using TelegramBot.DAL;
@@ -16,10 +17,14 @@ namespace TelegramBot.API.Controllers
     [ApiController]
     public class CheckController : ControllerBase
     {
-        public CheckController(IOptions<AppSettings> options, Bot bot)
+        private Task<TelegramBotClient> _bot;
+        private SongRepository _songRepository;
+
+        public CheckController(IOptions<AppSettings> options, Bot bot, SongRepository songRepository)
         {
             var appsetings = options.Value;
-            bot.Get();
+            _bot = bot.Get();
+            _songRepository = songRepository;
         }
        
         [HttpGet]
@@ -31,7 +36,7 @@ namespace TelegramBot.API.Controllers
         [HttpGet("start")]
         public async Task<ActionResult<SongDto>> Start()
         {
-            return Ok();
+            return Ok(_songRepository.GetSongByCollectionAndNumber(1, 1).Text);
         }
     }
 }
