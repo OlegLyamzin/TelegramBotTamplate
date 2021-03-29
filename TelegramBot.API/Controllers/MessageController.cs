@@ -25,21 +25,21 @@ namespace TelegramBot.API.Controllers
         }
 
         [Route("update")]
-        public async Task<ActionResult> Update([FromBody]Update update)
+        public async Task<ActionResult> Update([FromBody] Update update)
         {
             var commands = _bot.Commands;
             var message = update.Message;
             var client = await _bot.Get();
 
-            foreach(var command in commands)
+            foreach (var command in commands)
             {
                 if (command.Contains(message.Text))
                 {
                     command.Execute(message, client);
-                    return Ok();
+                    break;
                 }
             }
-            return NotFound();
+            return Ok();
         }
 
         [HttpGet("forcepush")]
@@ -50,13 +50,13 @@ namespace TelegramBot.API.Controllers
 
             client.DeleteWebhookAsync();
             var updates = client.GetUpdatesAsync().Result;
-            client.SetWebhookAsync(_settings.URL);
+            await client.SetWebhookAsync(_settings.URL);
             
             foreach(var update in updates)
             {
                 Update(update);
             }
-            return NotFound();
+            return Ok();
         }
     }
 }

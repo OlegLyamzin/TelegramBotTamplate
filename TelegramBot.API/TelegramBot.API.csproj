@@ -4,7 +4,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>WinExe</OutputType>
     <StartupObject>TelegramBot.API.Program</StartupObject>
+    <UserSecretsId>99ed037d-94ec-446d-a273-b335106a3dca</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\PublishProfiles\AppService.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\AppService.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.13" />
@@ -14,6 +23,12 @@
   <ItemGroup>
     <ProjectReference Include="..\TelegramBot.Core\TelegramBot.Core.csproj" />
     <ProjectReference Include="..\TelegramBot.DAL\TelegramBot.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="Properties\PublishProfiles\AppService.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
 </Project>
