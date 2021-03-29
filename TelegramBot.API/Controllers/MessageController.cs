@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using TelegramBot.API.Models;
+using TelegramBot.Core;
 
 namespace TelegramBot.API.Controllers
 {
@@ -13,10 +15,12 @@ namespace TelegramBot.API.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
+        private AppSettings _settings;
         private Bot _bot;
 
-        public MessageController(Bot bot)
+        public MessageController(IOptions<AppSettings> options, Bot bot)
         {
+            _settings = options.Value;
             _bot = bot;
         }
 
@@ -34,6 +38,23 @@ namespace TelegramBot.API.Controllers
                     command.Execute(message, client);
                     return Ok();
                 }
+            }
+            return NotFound();
+        }
+
+        [HttpGet("forcepush")]
+        public async Task<ActionResult> ForcePush()
+        {
+            var commands = _bot.Commands;
+            var client = await _bot.Get();
+
+            client.DeleteWebhookAsync();
+            var updates = client.GetUpdatesAsync().Result;
+            client.SetWebhookAsync(_settings.URL);
+            
+            foreach(var update in updates)
+            {
+                Update(update);
             }
             return NotFound();
         }
